@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import { updateValue } from '../actions'
+import { getValue, updateValue } from '../actions'
 
 const styles = theme => ({
   container: {
@@ -19,18 +19,42 @@ class Form extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {value: this.props.value}
+    this.state = {
+      value: 0,
+      node: '1',
+      privateFor: []
+    }
   }
 
   handleSubmit = event => {
     event.preventDefault()
-    this.props.dispatch(updateValue(this.state.value))
+    this.props.dispatch(updateValue(this.state.value, this.state.node, this.state.privateFor))
   }
 
-  handleChange = event => {
+  handleValueChange = event => {
     this.setState({
       value: event.target.value
     })
+  }
+
+  handleNodeChange = event => {
+    this.setState({
+      node: event.target.value
+    })
+  }
+
+  handlePrivateFor = event => {
+    var nodeList = []
+    if (event.target.value.length>2){
+      for (var i=1;i<event.target.value.length;i++){
+        nodeList.push(event.target.value.slice(i,i+1))
+        i++
+      }
+      console.log(nodeList)
+      this.setState({
+        privateFor: nodeList
+      })
+    }
   }
 
   render(){
@@ -38,7 +62,19 @@ class Form extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <TextField
           label="New Value"
-          onChange={this.handleChange}
+          onChange={this.handleValueChange}
+          margin="normal"
+        />
+        <br/>
+        <TextField
+          label="Node Number"
+          onChange={this.handleNodeChange}
+          margin="normal"
+        />
+        <br/>
+        <TextField
+          label="Private For List"
+          onChange={this.handlePrivateFor}
           margin="normal"
         />
         <br/>
@@ -51,11 +87,4 @@ class Form extends React.Component {
 
 }
 
-
-const mapStateToProps = state => {
-  return {
-    value: state.simpleStorage.value
-  }
-}
-
-export default connect(mapStateToProps)(withStyles(styles)(Form))
+export default connect()(withStyles(styles)(Form))

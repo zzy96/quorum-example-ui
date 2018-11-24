@@ -1,7 +1,8 @@
 import { SimpleStorage } from '../actions'
 
 const initialState = {
-	value: 0,
+	connected: [false,false,false,false,false,false,false],
+	value: ['not availbale','not availbale','not availbale','not availbale','not availbale','not availbale','not availbale'],
   status: false
 }
 
@@ -15,8 +16,14 @@ const simpleStorage = (state = initialState, action) => {
     case 'GET_VALUE':
       return {
         ...state,
-        value: action.value
+        value: action.value,
+				status: false
       }
+		case 'GET_CONNECTED':
+			return {
+				...state,
+				connected: action.connected
+			}
     default:
       return state
   }
