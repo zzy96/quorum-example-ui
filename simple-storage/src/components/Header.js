@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getValue } from '../actions'
+import NodeTable from './NodeTable'
 
 class Header extends React.Component{
 
@@ -15,13 +16,15 @@ class Header extends React.Component{
   render(){
     return (
       <div>
-        <h1>Node 1 Current Value: {this.props.value[0]}</h1>
-        <h1>Node 2 Current Value: {this.props.value[1]}</h1>
-        <h1>Node 3 Current Value: {this.props.value[2]}</h1>
-        <h1>Node 4 Current Value: {this.props.value[3]}</h1>
-        <h1>Node 5 Current Value: {this.props.value[4]}</h1>
-        <h1>Node 6 Current Value: {this.props.value[5]}</h1>
-        <h1>Node 7 Current Value: {this.props.value[6]}</h1>
+        <NodeTable rows={ [
+          {'node':1,'value':this.props.value[0]},
+          {'node':2,'value':this.props.value[1]},
+          {'node':3,'value':this.props.value[2]},
+          {'node':4,'value':this.props.value[3]},
+          {'node':5,'value':this.props.value[4]},
+          {'node':6,'value':this.props.value[5]},
+          {'node':7,'value':this.props.value[6]}
+        ] } />
       </div>
     )
   }
